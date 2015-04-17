@@ -47,7 +47,7 @@
     </nav>
 </header>
 <section class="borde">
-	<form id="formulario" class="form-inline" action="procesar.php" method="POST">
+	<form id="formulario" class="form-inline" action="../programaciones/procesar.php" method="POST">
     	<fieldset>
             <legend id="fcap" style="font-size:24px;color:#CCC;">
                 Programaciones
