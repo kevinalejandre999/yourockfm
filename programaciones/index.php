@@ -5,12 +5,13 @@
 <title>Gestion de Programaciones</title>
 <link rel="stylesheet" type="text/css" href="../css/gestprog.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<link href='http://fonts.googleapis.com/css?family=New+Rocker' rel='stylesheet' type='text/css'>
+<script src="../fonts/cufon/cufon-yui.js"></script>
+<script src="../fonts/cufon/capture-it.cufonfonts.js"></script>
 </head>
-
 <body class="container borde">
 <header>
     <nav>
+    	<img id="logo" src="../img/slogo.png">
         <div class="navbar navbar-inverse">
             <div class="container">
               <div class="navbar-header">
@@ -20,8 +21,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                
-                <a style="font-family:'New Rocker';text-shadow: 0px 0px 1px #FFF;" class="navbar-brand" href="#"><img id="logo" src="../img/slogo.png"> YouRock-Fm 88.9</a>
+                <a id="fcap" class="navbar-brand" href="#" style="font-size:22px">YouRock-Fm 88.9</a>
               </div>
               <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -49,7 +49,7 @@
 <section class="borde">
 	<form id="formulario" class="form-inline" action="procesar.php" method="POST">
     	<fieldset>
-            <legend id="rocker">
+            <legend id="fcap" style="font-size:24px;color:#CCC;">
                 Programaciones
             </legend>
             <input type="text" placeholder="Nombre" class="form-control">
@@ -65,4 +65,7 @@
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/bootstrap-button.js"></script>
+<script type="text/javascript">
+    	Cufon.replace('#fcap', { fontFamily: 'Capture it', hover: true }); 
+</script>
 </html>
