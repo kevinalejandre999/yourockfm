@@ -1,0 +1,33 @@
+/* CSS Document */
+.navbar{
+  border-radius: 10px;
+}
+header{
+	margin-top: 10px;
+}
+.borde{
+	border: solid 1px #CCCCCC;
+	-webkit-box-shadow: 0px 0px 7px 2px #999999;
+	box-shadow: 0px 0px 7px 2px #999999;
+	border-radius: 3px;
+}
+#logo{
+	width: 28px;
+	height: 28px;	
+}
+html body{
+background-color:#525252;
+}
+section{
+	padding-bottom: 5%;
+	padding-top: 5%;
+	padding-left: 2%;
+	padding-right: 2%;
+	margin-bottom: 10px;
+	margin-top: 10px;	
+}
+#rocker{
+	font-family: 'New Rocker', cursive;
+	color: #CCCCCC;
+	text-shadow: 0px 0px 7px #999999;
+}
