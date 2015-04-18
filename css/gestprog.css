@@ -21,7 +21,7 @@ header{
 	border-radius:10px;
 }
 html body{
-background-color:#333;
+	background-image: url(../img/background.png);
 }
 section{
 	padding-bottom: 5%;

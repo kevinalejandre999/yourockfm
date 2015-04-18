@@ -12,12 +12,12 @@ class Conexion
 	* Usuario de la DB.
 	* @var String
 	*/
-	private $_user = "root";
+	private $_user = "pentagono";
 	/**
 	* Password de la DB.
 	* @var String
 	*/
-	private $_pass = "2643589rosa";
+	private $_pass = "maligno";
 	/**
 	* Nombre de la DB.
 	* @var String
