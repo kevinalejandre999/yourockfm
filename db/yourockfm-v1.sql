@@ -2,7 +2,7 @@ CREATE TABLE votaciones (
   vot_id INTEGER(11) NOT NULL AUTO_INCREMENT,
   descripcion VARCHAR(50) NOT NULL,
   fecha DATE,
-  activo BOOL,
+  activo BOOLEAN,
   PRIMARY KEY(vot_id)
 )
 ENGINE=InnoDB;
@@ -27,7 +27,7 @@ CREATE TABLE programaciones (
   descripcion VARCHAR(200) NOT NULL,
   hora_inicio VARCHAR(10),
   hora_fin VARCHAR(10),
-  en_aire BOOL,
+  en_aire BOOLEAN,
   conductores VARCHAR(100),
   PRIMARY KEY(prog_id)
 )
