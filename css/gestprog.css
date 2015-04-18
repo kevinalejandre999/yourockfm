@@ -2,9 +2,9 @@
 .navbar{
 	width:89%;
 	border-radius: 10px;
-	position: absolute;
+/*	position: absolute;
 	left: 11%;
-	margin-top:-6%;
+	margin-top:-6%;*/
 }
 header{
 	margin-top: 10px;
@@ -16,8 +16,8 @@ header{
 	border-radius: 3px;
 }
 #logo{
-	width: 11%;
-	height: 11%;
+	width: 130PX;
+	height: 98PX;
 	border-radius:10px;
 }
 html body{
