@@ -26,11 +26,6 @@ Class Programacion
 	*/
 	public $hora_fin;
 	/**
-	* define si la programacion esta actualmente al aire.
-	* @var boolean
-	*/
-	public $en_aire;
-	/**
 	* Lista de los conductores de la programacion.
 	* @var String
 	*/

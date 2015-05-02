@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Documento sin título</title>
+</head>
+<body>
+	<input type="button" id="btnRecorrer" value="Recorrer Div !"/>
+	<div id="divRecorrer" style="border:1px Solid Red">
+        <br/> 
+            <p class="borde">Div o Párrafo</p>
+            <div class="borde">Div o Párrafo</div>
+            <p class="borde">Div o Párrafo</p>
+            <div class="borde">Div o Párrafo</div>
+            <p class="borde">Div o Párrafo</p>
+            <div class="borde">Div o Párrafo</div>
+            <p class="borde">Div o Párrafo</p>
+            <div class="borde">Div o Párrafo</div>
+        <br/>
+	</div>
+ <script src="../js/jquery.min.js"></script>   
+<script type="text/javascript">
+	$(document).ready(function () { 
+    $("#btnRecorrer").click(function () 
+    {
+        $("#divRecorrer p").each(function (index) 
+        { 
+            $(this).removeClass();
+            $(this).addClass("parrafo"); 
+            $(this).text('Parrafo ' + index);
+        }) ;
+    });
+});
+</script>
+</body>
+</html>

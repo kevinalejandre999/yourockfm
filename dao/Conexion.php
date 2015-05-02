@@ -51,5 +51,9 @@ class Conexion
     {
         return $this->_conexion->error;
     }
+	public function new_id()
+	{
+		return $this->_conexion->insert_id;
+	}
 }
 
