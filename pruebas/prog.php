@@ -25,7 +25,8 @@ require_once("../dao/ProgramacionDao.php");
 		## </Primer Objeto> ##		
 	?>
     
-<form action="../api/programacion/insert.php" method="post" id="formulario">
+<form action="../api/programacion/update.php" method="post" id="formulario">
+  <input type='number' name="prog_id" id="prog_id" placeholder="Codigo">
   <input name="nombre" id="nombre" placeholder="nombre">
   <input name="descripcion" id="descripcion" placeholder="descripcion">
   <input name="hora_inicio" id="hora_inicio" placeholder="hora inicio">

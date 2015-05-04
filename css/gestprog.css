@@ -37,3 +37,6 @@ section{
 .pintarborde{
 	border: solid 2px #FF0000 !important;	
 }
+#btn_clear{
+	display:none;
+}

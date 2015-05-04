@@ -21,11 +21,11 @@ $(document).ready(function() {
 				/*se prepara la fila con los datos recuperados*/
 				var contenido =  "<tr id='fila'>"
 									+"<th scope='row' id='prog_id'>"+programacion.prog_id+"</th>"
-									+ "<td>"+programacion.nombre+"</td>"
-									+ "<td>"+programacion.descripcion+"</td>"
-									+ "<td>"+programacion.hora_inicio+"</th>"
-									+ "<td>"+programacion.hora_fin+"</th>"
-									+ "<td>"+programacion.conductores+"</td>"
+									+ "<td id='td_nombre'>"+programacion.nombre+"</td>"
+									+ "<td id='td_descripcion'>"+programacion.descripcion+"</td>"
+									+ "<td id='td_hora_inicio'>"+programacion.hora_inicio+"</th>"
+									+ "<td id='td_hora_fin'>"+programacion.hora_fin+"</th>"
+									+ "<td id='td_conductores'>"+programacion.conductores+"</td>"
 									+ "<td id='botones'>"
 										+"<button id='btn_update' type='button' class='btn btn-warning btn-xs'>"
 											+ "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span>"
@@ -49,6 +49,15 @@ $(document).ready(function() {
 		}
 	});
 });
+
+/*#####- Variables Globales -#####*/
+/*Id de la programacion a modificar o eliminar*/
+var prog_id;
+/*Bandera para insert o update*/
+var isNew = true;
+/*Fila seleccionada para eliminar o modificar*/
+var fila;
+
 /*
  * Inicia el proceso de insercion.
  * Verifica que los campos no esten vacios
@@ -56,11 +65,20 @@ $(document).ready(function() {
  */
 function procesar_form(){
 	if(validar_text()){
-		var programacion = crearProgramacion();
-		/*###############################*/
-		console.log(JSON.stringify(programacion));
-		/*###############################*/
-		insertar(programacion);
+		if(isNew){
+			var programacion = crearProgramacion();
+			/*###############################*/
+			console.log(JSON.stringify(programacion));
+			/*###############################*/
+			insertarProg(programacion);
+		} else {
+			var programacion = crearProgramacion();
+			/*###############################*/
+			console.log(JSON.stringify(programacion));
+			/*###############################*/
+			modificarProg(programacion);
+			isNew = true;
+		}
 	};
 }
 /*
@@ -68,7 +86,7 @@ function procesar_form(){
  * @return boolean listo
  */
 function validar_text(){
-	var campos = obtenerCampos();
+	var campos = obtenerCamposProg();
 	var listo = true;
 	for(var i=0 ; i<campos.length ; i++){
 		if(campos[i].val().length==0){
@@ -102,8 +120,9 @@ function Programacion(){
  * @return Programacion
  */
 function crearProgramacion(){
-	var campos = obtenerCampos();
+	var campos = obtenerCamposProg();
 	var programacion = new Programacion();
+	if(!isNew) programacion.prog_id = prog_id;
 	programacion.nombre = campos[0].val();
 	programacion.descripcion = campos[1].val();
 	programacion.hora_inicio = campos[2].val();
@@ -114,22 +133,21 @@ function crearProgramacion(){
 /**
  * Metodo para insertar una programacion por medio de ajax atraves de POST.
  * @param Programacion
- * @return boolean
  */
-function insertar(programacion){
+function insertarProg(programacion){
 	$.ajax({
 		data : programacion,
 		type: 'POST',
-		url:"../api/programacion/insert.php",
+		url:"../api/programacion/isert.php",
 		dataType: 'json',
 		success: function(data){
 			var contenido =  "<tr id='fila'>"
 								+"<th scope='row' id='prog_id'>"+data.prog_id+"</th>"
-								+ "<td>"+data.nombre+"</td>"
-								+ "<td>"+data.descripcion+"</td>"
-								+ "<td>"+data.hora_inicio+"</th>"
-								+ "<td>"+data.hora_fin+"</th>"
-								+ "<td>"+data.conductores+"</td>"
+								+ "<td id='td_nombre'>"+data.nombre+"</td>"
+								+ "<td id='td_descripcion'>"+data.descripcion+"</td>"
+								+ "<td id='td_hora_inicio'>"+data.hora_inicio+"</th>"
+								+ "<td id='td_hora_fin'>"+data.hora_fin+"</th>"
+								+ "<td id='td_conductores'>"+data.conductores+"</td>"
 								+ "<td id='botones'>"
 									+"<button id='btn_update' type='button' class='btn btn-warning btn-xs'>"
 										+ "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span>"
@@ -143,7 +161,7 @@ function insertar(programacion){
 			$('#botones').hide();
 			$('#fila').on('click',mostrarBtn);
 			$('#fila').on('dblclick',ocultarBtn);
-			limpiarCampos();
+			limpiarCamposProg();
 		},
 		error: function(){
 			console.log("Error al enviar o recuperar datos de insert.php ");
@@ -151,19 +169,44 @@ function insertar(programacion){
 	});
 }
 /**
+ * Metodo para modificar una programacion por medio de ajax atraves de POST.
+ * @param Programacion
+ */
+function modificarProg(programacion){
+	$.ajax({
+		data : programacion,
+		type: 'POST',
+		url:"../api/programacion/update.php",
+		dataType: 'json',
+		success: function(data){
+			fila.find("#td_nombre").text(data.nombre)
+			fila.find("#td_descripcion").text(data.descripcion)
+			fila.find("#td_hora_inicio").text(data.hora_inicio)
+			fila.find("#td_hora_fin").text(data.hora_fin)
+			fila.find("#td_conductores").text(data.conductores)
+			limpiarCamposProg();
+		},
+		error: function(){
+			console.log("Error al enviar o recuperar datos de update.php ");
+		}
+	});
+}
+/**
  * Borra el contenido de los campos
  */
-function limpiarCampos(){
-	var campos = obtenerCampos();
+function limpiarCamposProg(){
+	var campos = obtenerCamposProg();
 	for(var i=0 ; i<campos.length ; i++){
 		campos[i].val("");	
 	}
+	$('#btn_clear').hide('slow');
+	isNew = true;
 }
 /**
  * Recupera la referencia de todos los campos del formulario
  * @return Array campos
  */
-function obtenerCampos(){
+function obtenerCamposProg(){
 	var campos=[];
 	var inputs = $('input')
 	inputs.each(function(index, element) {
@@ -196,16 +239,29 @@ function ocultarBtn(){
 	}
 }	
 /**
- * 
+ * LLena los campos con los datos seleccionados para su modificacion
+ * Oculta los botones de modigicar y eliminar y muestra el boton de cancelar o limpiar campos
  */
 function modoEdisionProg(){
-	var prog_id = $(this).parent().parent().find("#prog_id").text();
-	console.log("pasa a modo edision -> id="+prog_id);	
+	isNew = false;
+	fila = $(this).parent().parent();
+	var campos = obtenerCamposProg();
+	prog_id = fila.find("#prog_id").text();	
+	campos[0].val(fila.find("#td_nombre").text());
+	campos[1].val(fila.find("#td_descripcion").text());
+	campos[2].val(fila.find("#td_hora_inicio").text());
+	campos[3].val(fila.find("#td_hora_fin").text());
+	campos[4].val(fila.find("#td_conductores").text());
+	$("#btn_clear").show('slow');
+	fila.find("#botones").hide('slow');
+	fila.find("#botones").each(function(index, element) {
+        $(element).unbind('click');
+    });
 }
 /**
- * 
+ * Procesa la eliminacion de un registro
  */
 function procesarEliminarProg(){
-	var prog_id = $(this).parent().parent().find("#prog_id").text();
+	prog_id = $(this).parent().parent().find("#prog_id").text();
 	console.log("procesar Eliminar -> id="+prog_id);	
 }

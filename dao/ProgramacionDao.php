@@ -50,4 +50,21 @@ class ProgramacionDao
 		$this->_conexion->close();
 		return $respuesta;
     }
+	/** Modifica una programacion */
+	public function update($programacion)
+    {
+        $result = $this->_conexion->query("
+
+                UPDATE programaciones SET nombre='".$programacion->nombre."', descripcion='".$programacion->descripcion."', 	hora_inicio='".$programacion->hora_inicio."', hora_fin='".$programacion->hora_fin."', conductores='".$programacion->conductores."' WHERE prog_id=".$programacion->prog_id.";
+                
+        ");
+		$respuesta = "";
+        if($result) {
+            $respuesta = json_encode($programacion,JSON_PRETTY_PRINT);
+        } else {
+			$respuesta = "No se modificaron los datos: ".$this->_conexion->error();
+        }
+		$this->_conexion->close();
+		return $respuesta;
+    }
 }
