@@ -7,19 +7,13 @@
 	header("Access-Control-Allow-Origin: *");
 	header("Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS");
 	
-	if(isset($_POST['nombre'])){
-		$pac = new Programacion();
-		$pac->nombre = $_POST['nombre'];
-		$pac->descripcion = $_POST['descripcion'];
-		$pac->hora_inicio = $_POST['hora_inicio'];
-		$pac->hora_fin = $_POST['hora_fin'];
-		$pac->conductores = $_POST['conductores'];
-	 
+	if(isset($_POST['prog_id'])){
+	 	$prog_id = $_POST['prog_id'];
 		$con = new Conexion();
 		$pDao = new ProgramacionDao($con);
 		
-		echo $pDao->insert($pac);
+		echo $pDao->delete($prog_id);
 	} else {
-		echo "Error al crear el objeto Programacion, no se paso el metodo POST";
+		echo "Error, no se paso el metodo POST";
 	}
 ?>

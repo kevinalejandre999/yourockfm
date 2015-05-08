@@ -45,11 +45,13 @@ class ProgramacionDao
 			$programacion->prog_id = $this->_conexion->new_id();
             $respuesta = json_encode($programacion,JSON_PRETTY_PRINT);
         } else {
-			$respuesta = "No se insertaron los datos: ".$this->_conexion->error();
+			$res=array('error'=>"No se modificaron los datos: ".$this->_conexion->error());
+			$respuesta = json_encode($res,JSON_PRETTY_PRINT);
         }
 		$this->_conexion->close();
 		return $respuesta;
     }
+	
 	/** Modifica una programacion */
 	public function update($programacion)
     {
@@ -62,7 +64,28 @@ class ProgramacionDao
         if($result) {
             $respuesta = json_encode($programacion,JSON_PRETTY_PRINT);
         } else {
-			$respuesta = "No se modificaron los datos: ".$this->_conexion->error();
+			$res=array('error'=>"No se modificaron los datos: ".$this->_conexion->error());
+			$respuesta = json_encode($res,JSON_PRETTY_PRINT);
+        }
+		$this->_conexion->close();
+		return $respuesta;
+    }
+	
+	/** Elimina una programacion */
+	public function delete($prog_id)
+    {
+        $result = $this->_conexion->query("
+
+                DELETE FROM programaciones WHERE prog_id=".$prog_id.";
+                
+        ");
+		$res = array('delete'=>true,'error'=>'');
+        if($result) {
+            $respuesta = json_encode($res,JSON_PRETTY_PRINT);
+        } else {
+			$res['delete']=false;
+			$res['error']="No se modificaron los datos: ".$this->_conexion->error();
+			$respuesta = json_encode($res,JSON_PRETTY_PRINT);
         }
 		$this->_conexion->close();
 		return $respuesta;

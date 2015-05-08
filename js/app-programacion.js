@@ -67,15 +67,9 @@ function procesar_form(){
 	if(validar_text()){
 		if(isNew){
 			var programacion = crearProgramacion();
-			/*###############################*/
-			console.log(JSON.stringify(programacion));
-			/*###############################*/
 			insertarProg(programacion);
 		} else {
 			var programacion = crearProgramacion();
-			/*###############################*/
-			console.log(JSON.stringify(programacion));
-			/*###############################*/
 			modificarProg(programacion);
 			isNew = true;
 		}
@@ -138,7 +132,7 @@ function insertarProg(programacion){
 	$.ajax({
 		data : programacion,
 		type: 'POST',
-		url:"../api/programacion/isert.php",
+		url:"../api/programacion/insert.php",
 		dataType: 'json',
 		success: function(data){
 			var contenido =  "<tr id='fila'>"
@@ -188,6 +182,26 @@ function modificarProg(programacion){
 		},
 		error: function(){
 			console.log("Error al enviar o recuperar datos de update.php ");
+		}
+	});
+}
+/**
+ * Metodo para eliminar una programacion por medio de ajax atraves de POST.
+ * @param Prog_id
+ */
+function eliminarProg(prog_id){
+	var id={'prog_id':prog_id};
+	$.ajax({
+		data : id,
+		type: 'POST',
+		url:"../api/programacion/delete.php",
+		success: function(data){
+			if(data['delete']){
+				$(fila).remove();
+			}
+		},
+		error: function(){
+			console.log("Error al enviar o recuperar datos de delete.php");
 		}
 	});
 }
@@ -262,6 +276,7 @@ function modoEdisionProg(){
  * Procesa la eliminacion de un registro
  */
 function procesarEliminarProg(){
-	prog_id = $(this).parent().parent().find("#prog_id").text();
-	console.log("procesar Eliminar -> id="+prog_id);	
+	fila = $(this).parent().parent();
+	prog_id = fila.find("#prog_id").text();	
+	eliminarProg(prog_id);
 }
