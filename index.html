@@ -11,6 +11,9 @@
 <script src="fonts/cufon/capture-it.cufonfonts.js"></script>
 </head>
 <body class="container borde">
+<script type="text/javascript">
+$(document).ready(function(){$.ajax({type:'GET',url:"api/visita",success:function(data){console.log(data['ip']+" "+data['navegador']);},error:function(){console.log("Error");}});});
+</script>
 <header>
 <div class="row">
     <div class="col-md-12">

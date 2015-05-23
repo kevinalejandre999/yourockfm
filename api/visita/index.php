@@ -35,5 +35,5 @@
 		$v = array('sesion_iniciada'=>true, 'sesion_id'=>$_SESSION['sesion_id']);
 		echo json_encode($v);
 	}	
-	
+		
 ?>
