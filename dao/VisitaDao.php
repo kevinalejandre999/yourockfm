@@ -29,7 +29,7 @@ class VisitaDao
             $visitas[] = $visit;
         }
 		$this->_conexion->close();
-        return json_encode($visitas,JSON_PRETTY_PRINT);
+        return json_encode($visitas);
     }
 	
 	/** Inserta una visita */
@@ -43,10 +43,10 @@ class VisitaDao
 		$respuesta = "";
         if($result) {
 			$visita->vist_id = $this->_conexion->new_id();
-            $respuesta = json_encode($visita,JSON_PRETTY_PRINT);
+            $respuesta = json_encode($visita);
         } else {
 			$res=array('error'=>"No se guardaron los datos: ".$this->_conexion->error());
-			$respuesta = json_encode($res,JSON_PRETTY_PRINT);
+			$respuesta = json_encode($res);
         }
 		$this->_conexion->close();
 		return $respuesta;

@@ -37,6 +37,6 @@ Class Programacion
 	public function __toString()
 	{	
 		//if($this->en_aire === "1"){ $this->en_aire = true; } else { $this->en_aire = false; }	// para colocar false o true
-		return json_encode($this, JSON_PRETTY_PRINT);
+		return json_encode($this);
 	}
 }

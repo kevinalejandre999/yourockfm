@@ -29,7 +29,7 @@ class ProgramacionDao
             $programaciones[] = $dep;
         }
 		$this->_conexion->close();
-        return json_encode($programaciones,JSON_PRETTY_PRINT);
+        return json_encode($programaciones);
     }
 	
 	/** Inserta una programacion */
@@ -43,10 +43,10 @@ class ProgramacionDao
 		$respuesta = "";
         if($result) {
 			$programacion->prog_id = $this->_conexion->new_id();
-            $respuesta = json_encode($programacion,JSON_PRETTY_PRINT);
+            $respuesta = json_encode($programacion);
         } else {
 			$res=array('error'=>"No se modificaron los datos: ".$this->_conexion->error());
-			$respuesta = json_encode($res,JSON_PRETTY_PRINT);
+			$respuesta = json_encode($res);
         }
 		$this->_conexion->close();
 		return $respuesta;
@@ -62,10 +62,10 @@ class ProgramacionDao
         ");
 		$respuesta = "";
         if($result) {
-            $respuesta = json_encode($programacion,JSON_PRETTY_PRINT);
+            $respuesta = json_encode($programacion);
         } else {
 			$res=array('error'=>"No se modificaron los datos: ".$this->_conexion->error());
-			$respuesta = json_encode($res,JSON_PRETTY_PRINT);
+			$respuesta = json_encode($res);
         }
 		$this->_conexion->close();
 		return $respuesta;
@@ -81,11 +81,11 @@ class ProgramacionDao
         ");
 		$res = array('delete'=>true,'error'=>'');
         if($result) {
-            $respuesta = json_encode($res,JSON_PRETTY_PRINT);
+            $respuesta = json_encode($res);
         } else {
 			$res['delete']=false;
 			$res['error']="No se modificaron los datos: ".$this->_conexion->error();
-			$respuesta = json_encode($res,JSON_PRETTY_PRINT);
+			$respuesta = json_encode($res);
         }
 		$this->_conexion->close();
 		return $respuesta;
