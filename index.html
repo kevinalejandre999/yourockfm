@@ -112,6 +112,6 @@
     	Cufon.replace('#fcap', { fontFamily: 'Capture it', hover: true }); 
 </script>
 <script type="text/javascript">
-$(document).ready(function(){$.ajax({type:'GET',url:"api/visita",success:function(data){console.log(data['ip']+" "+data['navegador']);},error:function(){console.log("Error");}});});
+$(document).ready(function(){$.ajax({type:'GET',url:"api/visita",success:function(data){console.log(data);},error:function(){console.log("Error");}});});
 </script>
 </html>
