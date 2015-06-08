@@ -1,7 +1,8 @@
+
 <section class="borde">
 	<form id="formulario" class="form-inline" action="" method="POST">
     	<fieldset>
-            <legend id="fcap" style="font-size:24px;color:#CCC;">
+            <legend id="subt" style="font-size:24px;color:#CCC;">
                 Programaciones
             </legend>
             <input type="text" id="nombre" placeholder="Nombre" class="form-control"/>
@@ -9,21 +10,39 @@
             <input type="time" id="hora_inicio" class="form-control" placeholder="Hora inicio" maxlength="5"/>
             <input type="time" id="hora_fin" class="form-control" placeholder="Hora fin" maxlength="5"/>
             <input type="text" id="conductores" placeholder="Conductores" class="form-control"/>
-            <input type="button" id="boton" onClick="procesar_form()" class="btn btn-success" value="Guardar"/>
-            <button id='btn_clear' type='button' onClick="limpiarCamposProg()" class='btn btn-danger btn-xs'>
-				<span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span>
-			</button>
-        </fieldset>    
+            <br/>
+            <div id="up-content">
+            	<div class="col-sm-6">
+                	<label class="control-label col-sm-4">Programa(logo): </label>
+           			<input type="file" class="col-sm-8 " name="prog_img" id="prog_img"/>
+                </div>
+                <div class="col-sm-6">
+                	<label class="control-label col-sm-4">Conductores(foto): </label>
+                	<input type="file" class="col-sm-8" name="cond_img" id="cond_img"/>
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-sm-2">
+                	<input type="button" id="boton" onClick="procesar_form()" class="btn btn-success" value="Guardar"/>
+                    <button id='btn_clear' type='button' onClick="limpiarCamposProg()" class='btn btn-danger btn-xs'>
+                        <span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span>
+                    </button>
+                </div>
+                <div id='progress' class="col-sm-9 progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="50" aria-valuemax="100", style="width:0%"></div>
+                </div>
+            </div>
+        </fieldset>
     </form>
 </section>
 <section class="borde">
 	<table class="table table-hover">
 		<thead>
-            <th>Código</th>
+            <th>Codigo</th>
             <th>Nombre</th>
-            <th>Descripción</th>
-            <th>HoraInicio</th>
-            <th>HoraFin</th>
+            <th>Descripcion</th>
+            <th>Hora_Inicio</th>
+            <th>Hora_Fin</th>
             <th>Conductores</th>
 		</thead>
         <tbody id="contenido">
@@ -31,3 +50,8 @@
         </tbody>
     </table>
 </section>
+<script type="text/javascript">
+		Cufon.replace('#subt', { fontFamily: 'Capture it', hover: true });
+		Cufon.replace('th', { fontFamily: 'Capture it', hover: true });
+</script>
+

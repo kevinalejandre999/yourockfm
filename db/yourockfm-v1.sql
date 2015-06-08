@@ -17,6 +17,7 @@ CREATE TABLE visitas (
   segundo INTEGER(2) NOT NULL,
   ip VARCHAR(20) NOT NULL,
   navegador VARCHAR(100) NOT NULL,
+  sesion_id VARCHAR(50) NOT NULL,
   PRIMARY KEY(vist_id)
 )
 ENGINE=InnoDB;
@@ -29,6 +30,8 @@ CREATE TABLE programaciones (
   hora_fin VARCHAR(10),
   en_aire BOOLEAN,
   conductores VARCHAR(100),
+  prog_img VARCHAR(50),
+  cond_img VARCHAR(50),
   PRIMARY KEY(prog_id)
 )
 ENGINE=InnoDB;

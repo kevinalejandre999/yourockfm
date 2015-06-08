@@ -15,6 +15,8 @@
 		$pac->hora_inicio = $_POST['hora_inicio'];
 		$pac->hora_fin = $_POST['hora_fin'];
 		$pac->conductores = $_POST['conductores'];
+		$pac->prog_img = $_POST['prog_img'];
+		$pac->cond_img = $_POST['cond_img'];
 	 
 		$con = new Conexion();
 		$pDao = new ProgramacionDao($con);

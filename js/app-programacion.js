@@ -20,12 +20,18 @@ $(document).ready(function() {
 				var programacion = data[i];
 				/*se prepara la fila con los datos recuperados*/
 				var contenido =  "<tr id='fila'>"
-									+"<th scope='row' id='prog_id'>"+programacion.prog_id+"</th>"
-									+ "<td id='td_nombre'>"+programacion.nombre+"</td>"
+									+"<td id='prog_id'>"+programacion.prog_id+"</td>"
+									+ "<td id='td_nombre'>"
+										+"<img id='img_prog' src='../img/prog-img/"+programacion.prog_img+"' with='28' height='28' class='img-circle'></img>"
+										+programacion.nombre
+									+"</td>"
 									+ "<td id='td_descripcion'>"+programacion.descripcion+"</td>"
 									+ "<td id='td_hora_inicio'>"+programacion.hora_inicio+"</th>"
 									+ "<td id='td_hora_fin'>"+programacion.hora_fin+"</th>"
-									+ "<td id='td_conductores'>"+programacion.conductores+"</td>"
+									+ "<td id='td_conductores'>"
+										+"<img id='img_cond' src='../img/prog-img/"+programacion.cond_img+"' with='28' height='28' class='img-circle'></img>"
+										+programacion.conductores
+									+ "</td>"
 									+ "<td id='botones'>"
 										+"<button id='btn_update' type='button' class='btn btn-warning btn-xs'>"
 											+ "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span>"
@@ -59,18 +65,23 @@ var isNew = true;
 var fila;
 
 /*
- * Inicia el proceso de insercion.
  * Verifica que los campos no esten vacios
- * Crea el objeto programacion y lo inserta con ajax
+ * Crea el objeto programacion y lo envia para insertar o modificar
  */
 function procesar_form(){
 	if(validar_text()){
 		if(isNew){
 			var programacion = crearProgramacion();
+			//###########
+			//console.log(JSON.stringify(programacion));
+			//###########
 			insertarProg(programacion);
 		} else {
 			var programacion = crearProgramacion();
 			modificarProg(programacion);
+			//###########
+			console.log(JSON.stringify(programacion));
+			//###########
 			isNew = true;
 		}
 	};
@@ -82,7 +93,7 @@ function procesar_form(){
 function validar_text(){
 	var campos = obtenerCamposProg();
 	var listo = true;
-	for(var i=0 ; i<campos.length ; i++){
+	for(var i=0 ; i<(campos.length-2) ; i++){
 		if(campos[i].val().length==0){
 			campos[i].addClass('pintarborde'); 
 			listo=false;
@@ -107,6 +118,8 @@ function Programacion(){
 	this.hora_inicio = "";
 	this.hora_fin = "";
 	this.conductores = "";
+	this.prog_img = "";
+	this.cond_img = "";
 }
 /**
  * Instancia un objeto programacion
@@ -122,13 +135,59 @@ function crearProgramacion(){
 	programacion.hora_inicio = campos[2].val();
 	programacion.hora_fin = campos[3].val();
 	programacion.conductores = campos[4].val();
+	programacion.prog_img = nombre_archivo(campos[5].val());
+	programacion.cond_img = nombre_archivo(campos[6].val());
+
 	return programacion;
 }
 /**
- * Metodo para insertar una programacion por medio de ajax atraves de POST.
+ * Controla que los archivos de imagen esten seleccionados.
+ * si estan llama al metodo para cargar los archivos y luego al metodo para guardar los datos
  * @param Programacion
  */
 function insertarProg(programacion){
+	var prog_img = $('#prog_img');
+	var cond_img = $('#cond_img');
+	if(prog_img.val().length > 0 || cond_img.val().length > 0){
+		$('#progress').show('fast');
+		subirArchivosProg(prog_img);
+		subirArchivosProg(cond_img);
+		$('#progress').hide('fast');
+	}
+	insertDataProg(programacion);
+}
+/**
+ * Sube un archivo al servidor. Utiliza metodos de upload.js
+ * @param Programacion
+ */
+function subirArchivosProg(archivo){
+	archivo.upload('../api/programacion/subir_archivo.php',
+		function(respuesta) {
+			//##########
+			//console.log("respuesta = "+respuesta);
+			//##########
+			//Subida finalizada.
+			if (respuesta === 1) {
+				//##########
+				//console.log('El archivo ha sido subido correctamente: '+respuesta, true);
+				//##########
+			} else {
+				//##########
+				console.log('El archivo NO se ha podido subir: '+respuesta, false);
+				//##########
+			}
+		}, 
+		function(progreso, valor) {
+			//Barra de progreso.
+			$('#progress').find('div').attr('style','width:'+valor+'%');
+			$('#progress').find('div').html(valor+"%");
+		});
+} 
+/**
+ * Inserta los datos en la db por medio de  ajax atraves de POST.
+ * @param Programacion
+ */
+function insertDataProg(programacion){
 	$.ajax({
 		data : programacion,
 		type: 'POST',
@@ -136,12 +195,18 @@ function insertarProg(programacion){
 		dataType: 'json',
 		success: function(data){
 			var contenido =  "<tr id='fila'>"
-								+"<th scope='row' id='prog_id'>"+data.prog_id+"</th>"
-								+ "<td id='td_nombre'>"+data.nombre+"</td>"
+								+"<td id='prog_id'>"+data.prog_id+"</td>"								
+								+ "<td id='td_nombre'>"
+									+"<img id='img_prog' src='../img/prog-img/"+programacion.prog_img+"' with='28' height='28' class='img-circle'></img>"
+									+data.nombre
+								+ "</td>"
 								+ "<td id='td_descripcion'>"+data.descripcion+"</td>"
 								+ "<td id='td_hora_inicio'>"+data.hora_inicio+"</th>"
 								+ "<td id='td_hora_fin'>"+data.hora_fin+"</th>"
-								+ "<td id='td_conductores'>"+data.conductores+"</td>"
+								+ "<td id='td_conductores'>"
+									+"<img id='img_cond' src='../img/prog-img/"+programacion.cond_img+"' with='28' height='28' class='img-circle'></img>"
+									+data.conductores
+								+ "</td>"
 								+ "<td id='botones'>"
 									+"<button id='btn_update' type='button' class='btn btn-warning btn-xs'>"
 										+ "<span class='glyphicon glyphicon-edit' aria-hidden='true'></span>"
@@ -158,30 +223,52 @@ function insertarProg(programacion){
 			limpiarCamposProg();
 		},
 		error: function(){
+			//##########
 			console.log("Error al enviar o recuperar datos de insert.php ");
+			//##########
 		}
 	});
 }
 /**
- * Metodo para modificar una programacion por medio de ajax atraves de POST.
+ * Controla que los archivos de imagen esten seleccionados.
+ * si estan llama al metodo para cargar los archivos y luego al metodo para actualizar los datos
  * @param Programacion
  */
 function modificarProg(programacion){
+	var prog_img = $('#prog_img');
+	var cond_img = $('#cond_img');
+	if(prog_img.val().length > 0 || cond_img.val().length > 0){
+		$('#progress').show('fast');
+		subirArchivosProg(prog_img);
+		subirArchivosProg(cond_img);
+		$('#progress').hide('fast');
+	}
+	modificarDataProg(programacion);	
+}
+/**
+ * Actualiza los datos de una programacion atraves de POST.
+ * @param Programacion
+ */
+function modificarDataProg(programacion){
 	$.ajax({
 		data : programacion,
 		type: 'POST',
 		url:"../api/programacion/update.php",
 		dataType: 'json',
 		success: function(data){
-			fila.find("#td_nombre").text(data.nombre)
-			fila.find("#td_descripcion").text(data.descripcion)
-			fila.find("#td_hora_inicio").text(data.hora_inicio)
-			fila.find("#td_hora_fin").text(data.hora_fin)
-			fila.find("#td_conductores").text(data.conductores)
+			console.log(data);
+			fila.find("#td_nombre").html("<img id='img_prog' src='../img/prog-img/"+data.prog_img+"' with='28' height='28' class='img-circle'/>"+data.nombre);
+			fila.find("#td_descripcion").text(data.descripcion);
+			fila.find("#td_hora_inicio").text(data.hora_inicio);
+			fila.find("#td_hora_fin").text(data.hora_fin);
+			fila.find("#td_conductores").html("<img id='img_cond' src='../img/prog-img/"+data.cond_img+"' with='28' height='28' class='img-circle'/>"+data.conductores);		
+
 			limpiarCamposProg();
 		},
 		error: function(){
+			//##########
 			console.log("Error al enviar o recuperar datos de update.php ");
+			//##########
 		}
 	});
 }
@@ -201,7 +288,9 @@ function eliminarProg(prog_id){
 			}
 		},
 		error: function(){
+			//##########
 			console.log("Error al enviar o recuperar datos de delete.php");
+			//##########
 		}
 	});
 }
@@ -265,7 +354,7 @@ function modoEdisionProg(){
 	campos[1].val(fila.find("#td_descripcion").text());
 	campos[2].val(fila.find("#td_hora_inicio").text());
 	campos[3].val(fila.find("#td_hora_fin").text());
-	campos[4].val(fila.find("#td_conductores").text());
+	campos[4].val(fila.find("#td_conductores").text());	
 	$("#btn_clear").show('slow');
 	fila.find("#botones").hide('slow');
 	fila.find("#botones").each(function(index, element) {
@@ -279,4 +368,16 @@ function procesarEliminarProg(){
 	fila = $(this).parent().parent();
 	prog_id = fila.find("#prog_id").text();	
 	eliminarProg(prog_id);
+}
+/**
+ * Devuelve el nombre de un archivo
+ * seleccionado desde un input file
+ */
+function nombre_archivo(archivo) {
+  arch = archivo.split('\\');
+  return arch[arch.length-1];
+}
+function src_name(archivo) {
+  arch = archivo.split('/');
+  return arch[arch.length-1];
 }

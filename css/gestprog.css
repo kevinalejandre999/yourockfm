@@ -40,3 +40,10 @@ section{
 #btn_clear{
 	display:none;
 }
+#progress{
+	display:none;
+}
+#up-content{
+	margin-top: 2.5%;
+	margin-bottom:7%;
+}

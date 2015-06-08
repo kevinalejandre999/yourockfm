@@ -20,7 +20,7 @@
 		$v->anio = date('Y');
 		$v->mes = date('m');
 		$v->dia = date('d');
-		$v->hora = date('h');
+		$v->hora = date('H');
 		$v->minuto = date('i');
 		$v->segundo = date('s');
 		$v->ip = getenv('REMOTE_ADDR');

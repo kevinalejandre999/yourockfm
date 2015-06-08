@@ -12,7 +12,7 @@ class Conexion
 	* Usuario de la DB.
 	* @var String
 	*/
-	private $_user = "pentagono";
+	private $_user = "yourock_user";
 	/**
 	* Password de la DB.
 	* @var String
@@ -22,7 +22,7 @@ class Conexion
 	* Nombre de la DB.
 	* @var String
 	*/
-	private $_db_name = "yourockfm_v1";
+	private $_db_name = "yourock_fm_v1";
 	
 	/*Referencia a conexion.*/ 
 	private $_conexion;

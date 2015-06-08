@@ -26,17 +26,26 @@ Class Programacion
 	*/
 	public $hora_fin;
 	/**
-	* Lista de los conductores de la programacion.
+	* Conductores de la programacion.
 	* @var String
 	*/
 	public $conductores;
+	/**
+	* logo del programa
+	* @var String
+	*/
+	public $prog_img;
+	/**
+	* foto de los conductores
+	* @var String
+	*/
+	public $cond_img;
 	
 	/**
 	* Funcion toString.
 	*/
 	public function __toString()
 	{	
-		//if($this->en_aire === "1"){ $this->en_aire = true; } else { $this->en_aire = false; }	// para colocar false o true
 		return json_encode($this);
 	}
 }
